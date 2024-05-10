@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Linux Terminal - Happy Birthday</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        input[type="text"] {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        * {
+            cursor: text;
+        }
+
+        *::selection {
+            cursor: none;
+            background-color: white;
+            color: black;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+    <script>
+        function randomBirthdayMessage() {
+            const messages = [
+`Computing random message...\n
+╮╮╭╮╭╮╭╮╮╭
+┣┫┣┫┣╯┣╯╰┫  ☆
+╯╯╯╯╯ ╯ ╰╯╭━┻━╮
+┏╮┊┏╮╭╮╮╭╭┻━━━┻╮
+┣┫┊┃┃┣┫╰┫┣╮╭╮╭╮┃
+┗╯┊┗╯╯╯╰╯┃╰╯╰╯╰┫
+━━━━━━━━━╯╳╳╳╳╳╰
+`,
+
+`Computing random message...\n
+ღ♪*•.¸¸.•*¨¨*•.¸.•*¨¨*•.¸¸.•*•♪ღ♪
+ღ♪░H░A░P░P░Y░ B░I░R░T░H░D░A░Y░♪ღ
+•♪ღ♪*•.¸¸.•*¨¨*••*¨¨*•.¸¸.•*•♪ღ♪•
+`,
+
+`Computing random message...\n
+____▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄
+───█▒▒░░░░░░░░░▒▒█
+────█░░█░░░░░█░░█
+─▄▄──█░░░▀█▀░░░█──▄▄
+█░░▀─▀▄░░░░░░░▄▀─▀░░█
+ █▄█ █▀█ █▀█ █▀█ █▄█
+ █▀█ █▀█ █▀▀ █▀▀ ░█
+ ♥ 🅱🅸🆁🆃🅷🅳🅰🆈 ♥`
+
+
+
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        function handleInput(event) {
+            const out = document.getElementById("output");
+            const userPrefix = "mnovak@linux:~$ ";
+            if (event.key === "Enter") {
+                var input = event.target.value.trim();
+                if (input.includes("ls") && input[0] === "l" && input[1] === "s") {
+                    out.innerHTML += "<pre>" + document.getElementsByClassName("ls-output")[0].innerHTML + "</pre>";
+                    event.target.value = "";
+                    event.target.scrollIntoView();
+                    return;
+                }
+                var command = document.createElement("pre");
+                command = userPrefix + input;
+                out.innerHTML += command + "\n";
+                if (input === "./birthday.sh") {
+                    var output = document.createElement("pre");
+                    output.textContent = randomBirthdayMessage();
+                    out.appendChild(output);
+                } else if (input === "./crash.exe") {
+                    document.getElementById("commandline").classList.add("hidden");
+                    var output = document.createElement("pre");
+                    output.textContent = "Segmentation fault";
+                    out.appendChild(output);
+                    for (var i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            var output = document.createElement("pre");
+                            output.textContent = "Segmentation fault";
+                            out.appendChild(output);
+                            out.children[out.children.length - 1].scrollIntoView();
+                        }, i * 700);
+                    }
+                    setTimeout(() => {
+                        var output = document.createElement("pre");
+                        output.textContent = "Exception in thread \"main\" java.lang.NullPointerException\n\tat crash.main(crash.java:1)";
+                        out.appendChild(output);
+                        out.children[out.children.length - 1].scrollIntoView();
+                    }, 3500);
+                    for (var i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            var output = document.createElement("pre");
+                            output.textContent = "Exception in thread \"main\" java.lang.NullPointerException\n\tat crash.main(crash.java:" + (Math.
+                                floor(Math.random() * 10) + 1
+                            ) +")";
+                            out.appendChild(output);
+                            out.children[out.children.length - 1].scrollIntoView();
+                        }, 3500 + i * 300);
+                    }
+                    setTimeout(() => {
+                        window.close();
+                    }, 3500 + 5 * 300);
+                } else {
+                    var output = document.createElement("pre");
+                    output.textContent = "bash: " + input + ": command not found\n";
+                    output.textContent += "Try 'help' for more information.";
+                    out.appendChild(output);
+                }
+                event.target.value = "";
+                event.target.scrollIntoView();
+            }
+        }
+        document.onclick = handleClick;
+        function handleClick(event) {
+            if (window.getSelection().toString().length > 0) {
+                Promise.resolve().then(() => window.getSelection().toString().length == 0 ? document.getElementById("console").focus() : null);
+                return;
+            }
+            if (event.target.id !== "console") {
+                document.getElementById("console").focus();
+            }
+            document.getElementById("console").focus();
+        }
+    </script>
+</head>
+
+<body onclick="handleClick(event)">
+    <pre class="ls-output">
+mnovak@linux:~$ ls --color=auto -l
+total <span style="color: greenyellow">43337</span>
+-rwxrwxrwx	1	mnovak	jfletch  42000	May 10	11:37	<span style="color: lightblue">birthday.sh</span>
+-rwx--x--x	2	mnovak	jfletch  1337	May 11	12:24	<span style="color: orange">crash.exe</span>
+    </pre>
+    <span id="output"></span>
+    <div style="display: flex; flex-direction: row;" id="commandline"><label for="console">mnovak@linux:~$&nbsp;</label><input
+            id="console" name="console" type="text" onkeydown="handleInput(event)" autofocus autocomplete="false"></div>
+</body>
+
+</html>
